@@ -15,9 +15,11 @@ export class UsersService {
     }
 
     async createUser(dto: CreateUserDto) {
-        const user = await this.userRepository.create(dto);
-        const role = await this.roleService.getRoleByValue("ADMIN");
-        await user.$set("roles", [role.id]);
+        const user = await this.userRepository.create(dto)
+            .finally(()=>{console.log(`User with email=${dto.email} created`)});
+        const role = await this.roleService.getRoleByValue("USER");
+        await user.$set("roles", [role.id])
+            .finally(()=>{console.log(`role ${role.value} assigned to user with email ${dto.email}`)});
         user.roles = [role];
         return user;
     }

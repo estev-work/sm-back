@@ -1,12 +1,16 @@
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
-import { Role } from "../roles/roles.model";
-import { UserRoles } from "../roles/user-roles.models";
+import { Role } from "../../roles/roles.model";
+import { UserRoles } from "../../roles/user-roles.models";
 import { using } from "rxjs";
+import { ProductCategories } from "./product-categories.models";
+import { Category } from "../category/category.model";
 
 interface ProductCreationAttrs {
     name: string,
-    password: string
+    shortDescription: string,
+    description: string,
+    price: number
 }
 
 @Table({ tableName: "products" })
@@ -35,4 +39,7 @@ export class Product extends Model<Product, ProductCreationAttrs> {
     @ApiProperty({example:'100',description:'Product price'})
     @Column({ type: DataType.INTEGER, allowNull: true, defaultValue: 0 })
     price: number;
+
+    @BelongsToMany(()=>Category,()=>ProductCategories)
+    roles: Category[];
 }

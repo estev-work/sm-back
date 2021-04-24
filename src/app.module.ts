@@ -7,9 +7,13 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from "./roles/roles.model";
 import { UserRoles } from "./roles/user-roles.models";
 import { AuthModule } from './auth/auth.module';
-import { ProductModule } from './product/product.module';
 import { PostsModule } from "./posts/posts.module";
 import { Post } from "./posts/posts.model";
+import { CategoryModule } from "./shop/category/category.module";
+import { Category } from "./shop/category/category.model";
+import { ProductModule } from "./shop/product/product.module";
+import { ProductCategories } from "./shop/product/product-categories.models";
+import { Product } from "./shop/product/product.model";
 
 @Module({
     controllers:[],
@@ -25,7 +29,7 @@ import { Post } from "./posts/posts.model";
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User, Role, UserRoles, Post ],
+            models: [User, Role, UserRoles, Post, Product, Category, ProductCategories],
             logging: false,
             autoLoadModels: true,
         }),
@@ -34,6 +38,7 @@ import { Post } from "./posts/posts.model";
         AuthModule,
         PostsModule,
         ProductModule,
+        CategoryModule
     ]
 })
 export class AppModule{
